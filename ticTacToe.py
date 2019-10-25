@@ -40,7 +40,7 @@ class State:
         # проверяем диагонали
         diag_sum1 = sum([self.board[i, i] for i in range(BOARD_COLS)])
         diag_sum2 = sum([self.board[i, BOARD_COLS-i-1] for i in range(BOARD_COLS)])
-        diag_sum = max(diag_sum1, diag_sum2)
+        diag_sum = max(diag_sum1, diag_sum2, key=abs)
         if diag_sum == 3:
             self.isEnd = True
             return 1
@@ -162,7 +162,7 @@ class State:
                 win = self.winner()
                 if win is not None:
                     if win == -1:
-                        print(self.p2.name, "выиграл! Ничего себе, да вы настоящий мастер!")
+                        print(self.p2.name, ", победа за тобой! Похоже, вы настоящий мастер!")
                     else:
                         print("Ничья! Неплохо, {}, но ты можешь лучше!".format(self.p2.name))
                     self.reset()
@@ -254,6 +254,8 @@ class HumanPlayer:
             action = (row, col)
             if action in positions:
                 return action
+            else:
+                print("Кажется, вы выбрали занятую клетку!\nНомера строк и столбцов начинаются с 0.")
     
     def addState(self, state):
         pass
